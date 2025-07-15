@@ -11,6 +11,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", userRoutes);
 
-app.listen(3000, () => {
-    console.log("Servidor está funcionado na porta 3000");
+app.listen(4000, () => {
+    console.log("Servidor está funcionado na porta 4000");
 });
