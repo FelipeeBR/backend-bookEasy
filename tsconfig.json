@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "lib": [
+            "es2022"
+        ],
+        "sourceMap": true,
+        "outDir": "dist",
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "noImplicitThis": true,
+        "resolveJsonModule": true,
+        "alwaysStrict": true,
+        "removeComments": true,
+        "noImplicitReturns": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@controllers/*": ["./src/controllers/*"],
+            "@models/*": ["./src/models/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@services/*": ["./src/services/*"]
+        },
+        "rootDirs": [
+            "./",
+            "./test"
+        ],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./test/**/*.ts"
+, "index.ts"    ],
+    "exclude": [
+        "./node_modules/*",
+        "dist"
+    ]
+}
