@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "prisma generate && tsc && node dist/index.js",
-    "dev": "prisma generate && nodemon --watch src --exec ts-node index.ts",
+    "dev": "prisma generate && nodemon --legacy-watch . --ext ts,json --exec ts-node index.ts",
     "build": "tsc"
   },
   "author": "Felipe Mendes",
@@ -15,15 +15,15 @@
     "@prisma/client": "^6.12.0",
     "@types/express": "^5.0.3",
     "@types/module-alias": "^2.0.4",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "module-alias": "^2.2.3",
-    "nodemon": "^3.1.10",
     "prisma": "^6.12.0",
-    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0"
   }
 }
