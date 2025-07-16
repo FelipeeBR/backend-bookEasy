@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/", userRoutes);
+app.use("/api", userRoutes);
 
 app.listen(4000, () => {
     console.log("Servidor está funcionado na porta 4000");
