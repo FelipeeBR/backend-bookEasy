@@ -33,7 +33,7 @@ function signToken(payload: any, secret: any, options: any) {
     })
 }
 
-module.exports = {
+export default {
     auth,
     signToken
-};
+}

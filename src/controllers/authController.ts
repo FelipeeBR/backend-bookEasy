@@ -1,12 +1,12 @@
-import prisma from '../../config/database';
-import { generateTokens, verifyRefreshToken } from '../services/tokenService';    
-import dotenv from "dotenv";
+const prismaInstance = require('../../config/database');
+const {generateTokens, verifyRefreshToken} = require("../services/tokenService");
+const dotenv = require("dotenv");
 const { compare } = require("bcrypt"); 
 
 dotenv.config();
 
 async function authenticate(email: string, password: string) {
-    const user = await prisma.user.findUnique({
+    const user = await prismaInstance.user.findUnique({
         where: {
             email: email.toLowerCase()
         }
@@ -19,7 +19,7 @@ async function authenticate(email: string, password: string) {
   
     const { accessToken, refreshToken } = generateTokens({ id: user.id, email: user.email });
     
-    await prisma.refreshToken.create({
+    await prismaInstance.refreshToken.create({
         data: {
             token: refreshToken,
             userId: user.id,
@@ -33,7 +33,7 @@ async function refresh(refreshToken: string) {
     if(!refreshToken) return false;
     try {
         const decoded = verifyRefreshToken(refreshToken);
-        const tokenDb = await prisma.refreshToken.findUnique({
+        const tokenDb = await prismaInstance.refreshToken.findUnique({
             where: {
                 token: refreshToken
             }
@@ -50,7 +50,7 @@ async function refresh(refreshToken: string) {
 }
 
 async function logout(refreshToken: string) {
-    await prisma.refreshToken.deleteMany({
+    await prismaInstance.refreshToken.deleteMany({
         where: {
             token: refreshToken
         }

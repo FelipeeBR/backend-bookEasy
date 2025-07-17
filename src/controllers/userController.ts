@@ -1,5 +1,5 @@
 import prisma from '../../config/database';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const isValidPassword = (password: string) => password.length >= 8;
@@ -35,9 +35,9 @@ async function userExists(email: string) {
 }
 
 
-module.exports = {
+export default {
     createUser,
-    isValidPassword,
+    userExists,
     isValidEmail,
-    userExists
+    isValidPassword
 }

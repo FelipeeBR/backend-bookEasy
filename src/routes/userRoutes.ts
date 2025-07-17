@@ -1,6 +1,7 @@
-const expressInstance = require("express");
-const router = expressInstance.Router();
-const userController = require("../controllers/userController");
+import express from "express";
+const router = express.Router();
+import userController from "../controllers/userController";
+import auth from "../middlewares/auth";
 
 router.post("/register", async (req: any, res: any) => {
     const { name, email, password, phone, type } = req.body;
@@ -21,4 +22,4 @@ router.get("/users", async (req: any, res: any) => {
     res.send("Listagem de usuários");
 })
 
-module.exports = router;
+export default router;

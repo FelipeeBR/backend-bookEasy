@@ -1,9 +1,9 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import express from "express";
+import bodyParser from "body-parser";
 
 //Rotas
-const userRoutes = require("./src/routes/userRoutes");
-const authRoutes = require("./src/routes/authRoutes");
+import userRoutes from "./src/routes/userRoutes";
+import authRoutes from "./src/routes/authRoutes";
 
 const app = express();
 
@@ -16,3 +16,5 @@ app.use("/api", authRoutes);
 app.listen(4000, () => {
     console.log("Servidor está funcionado na porta 4000");
 });
+
+export default app;

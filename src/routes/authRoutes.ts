@@ -1,4 +1,4 @@
-import express, { Request, Response} from 'express';
+import express, { Request, Response } from "express";
 
 const router = express.Router();
 const { authenticate, refresh, logout } = require("../controllers/authController");
@@ -26,5 +26,5 @@ router.post("/auth/logout", async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Logout realizado com sucesso!" });
 });
 
-module.exports = router;
+export default router;
 
