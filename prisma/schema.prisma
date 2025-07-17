@@ -15,18 +15,28 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String?
-  email String @unique
-  password String
-  phone String?
-  type UserType
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String   @unique
+  password  String
+  phone     String?
+  type      UserType
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tokens RefreshToken[]
 }
 
 enum UserType {
   CLIENT
   EMPLOYEE
   ADMIN
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

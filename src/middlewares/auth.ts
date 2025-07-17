@@ -3,32 +3,20 @@ import { Request, Response, NextFunction } from 'express';
 import dotenv from "dotenv";
 dotenv.config();
 
-interface AuthenticatedRequest extends Request {
-    loggedUser?: {
-        id: string;
-        email: string;
-    };
-    token?: string;
-}
-
 function auth(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
-    if(!token) {
-        return res.status(401).json({ error: "Token not found" });
-    } 
-    try {
-        const bearedToken = token.split(" ")[1];
-        jwt.verify(bearedToken, process.env.JWT_TOKEN!, (err: any, decoded: any) => {
-            if(err) {
-                return res.status(401).json({ error: "Unauthorized" });
-            } else {
-                (req as AuthenticatedRequest).token = bearedToken;
-                (req as AuthenticatedRequest).loggedUser = {id: decoded.id, email: decoded.email};
-                return next();
-            }
-        })
-    } catch (error) {
+    if(!token || !token.startsWith("Bearer ")) {
         return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const bearedToken = token.split(" ")[1];
+
+    try {
+        const decoded = jwt.verify(bearedToken, process.env.JWT_TOKEN!) as any;
+        (req as any).user = {id: decoded.id, email: decoded.email};
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: "Invalid token" });
     }
     return next();
 }
