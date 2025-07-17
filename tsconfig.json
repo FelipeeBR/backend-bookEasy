@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2022",
         "moduleResolution": "node",
-        "module": "ESNext",
+        "module": "ESnext",
         "lib": [
             "es2022"
         ],
@@ -18,6 +18,8 @@
         "removeComments": true,
         "noImplicitReturns": true,
         "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
         "baseUrl": ".",
         "paths": {
@@ -29,7 +31,8 @@
         },
         "rootDirs": [
             "./",
-            "./test"
+            "./test",
+            "./src",
         ],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
