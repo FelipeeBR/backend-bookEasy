@@ -34,10 +34,24 @@ async function userExists(email: string) {
     return false;
 }
 
+async function deleteUser(email: string) {
+    try {
+        const user = await prisma.user.delete({
+            where: {
+                email: email.toLowerCase()
+            }
+        });
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 
 export default {
     createUser,
     userExists,
     isValidEmail,
-    isValidPassword
+    isValidPassword,
+    deleteUser
 }
