@@ -48,5 +48,14 @@ describe("Testes de autenticação", () => {
             password: userTest.password
         });
         expect(response.statusCode).toEqual(200);
+        expect(response.body.token).toBeDefined();
+    });
+
+    test("Deve verificar se email é valido", async () => {
+        const response = await supertest(server).post("/api/auth").send({
+            email: "fulanoemail.com",
+            password: userTest.password
+        });
+        expect(response.statusCode).toEqual(400);
     });
 });
