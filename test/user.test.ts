@@ -14,4 +14,15 @@ describe("Testes de usuarios", () => {
         });
         expect(response.statusCode).toEqual(201);  
     });
+
+    test("Deve não cadastrar usuario com dados inválidos", async () => {
+        const response = await supertest(server).post("/api/register").send({
+            name: "",
+            email: "",
+            password: "",
+            phone: "",
+            type: ""
+        });
+        expect(response.statusCode).toEqual(400);
+    });
 });
