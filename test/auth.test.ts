@@ -9,4 +9,12 @@ describe("Testes de autenticação", () => {
         });
         expect(response.statusCode).toEqual(400);
     });
+
+    test("Deve gerar erro ao tentar autenticar com senha incorreta", async () => {
+        const response = await supertest(server).post("/api/auth").send({
+            email: "tDl9y@example.com",
+            password: "12345"
+        });
+        expect(response.statusCode).toEqual(401);
+    });
 });
