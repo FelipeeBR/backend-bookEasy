@@ -17,4 +17,12 @@ describe("Testes de autenticação", () => {
         });
         expect(response.statusCode).toEqual(401);
     });
+
+    test("Deve gerar erro ao tentar autenticar com e-mail incorreto", async () => {
+        const response = await supertest(server).post("/api/auth").send({
+            email: "fulano",
+            password: "1234567898"
+        });
+        expect(response.statusCode).toEqual(401);
+    });
 });
