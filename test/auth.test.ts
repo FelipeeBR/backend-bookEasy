@@ -34,14 +34,6 @@ describe("Testes de autenticação", () => {
         expect(response.statusCode).toEqual(401);
     });
 
-    test("Deve gerar erro ao tentar autenticar com e-mail incorreto", async () => {
-        const response = await supertest(server).post("/api/auth").send({
-            email: "fulano@email.com",
-            password: userTest.password
-        });
-        expect(response.statusCode).toEqual(401);
-    });
-
     test("Deve autenticar usuario com sucesso", async () => {
         const response = await supertest(server).post("/api/auth").send({
             email: userTest.email,
@@ -51,9 +43,9 @@ describe("Testes de autenticação", () => {
         expect(response.body.token).toBeDefined();
     });
 
-    test("Deve verificar se email é valido", async () => {
+    test("Deve verificar se usuario possui uma conta", async () => {
         const response = await supertest(server).post("/api/auth").send({
-            email: "fulanoemail.com",
+            email: "Q7s7Trds@email.com",
             password: userTest.password
         });
         expect(response.statusCode).toEqual(400);

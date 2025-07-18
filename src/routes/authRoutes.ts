@@ -8,7 +8,7 @@ router.post("/auth", async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if(!email || !password) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
 
-    if(!userController.isValidEmail(email)) return res.status(400).json({ error: "E-mail inválido!" });
+    if(await userController.userExists(email) == false) return res.status(400).json({ error: "E-mail não cadastrado!" });
 
     const token = await authController.authenticate(email, password);
     if(!token) return res.status(401).json({ error: "E-mail ou senha incorretos!" });
