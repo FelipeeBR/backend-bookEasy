@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Sistema de Agendamento de Serviços",
   "main": "index.ts",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "jest",
     "start": "prisma generate && tsc && node dist/index.js",
