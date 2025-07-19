@@ -3,7 +3,7 @@ const router = express.Router();
 
 import employeeController from "../controllers/employeeController";
 
-router.post("/employee/create", async (req: any, res: any) => {
+router.post("/employee", async (req: any, res: any) => {
     const { specialization, userId } = req.body;
     if(!specialization || !userId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {

@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import customerController from "../controllers/customerController";
 
-router.post("/customer/create", async (req: any, res: any) => {
+router.post("/customer", async (req: any, res: any) => {
     const { cpf, dataNasc, endereco, userId } = req.body;
     if(!cpf || !dataNasc || !endereco || !userId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {

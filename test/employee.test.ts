@@ -24,7 +24,7 @@ afterAll(async () => {
 
 describe("Testes de funcionários", () => {
     test("Deve criar um novo funcionário", async () => {
-        const response = await supertest(server).post("/api/employee/create").send({
+        const response = await supertest(server).post("/api/employee").send({
             specialization: "Mecanico",
             userId: userId
         });

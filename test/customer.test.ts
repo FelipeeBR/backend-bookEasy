@@ -23,7 +23,7 @@ afterAll(async () => {
 
 describe("Testes de clientes", () => {
     test("Deve criar um novo cliente", async () => {
-        const response = await supertest(server).post("/api/customer/create").send({
+        const response = await supertest(server).post("/api/customer").send({
             cpf: "123456789",
             dataNasc: new Date('2000-01-01'),
             endereco: "Rua 1, 123, Cidade",
