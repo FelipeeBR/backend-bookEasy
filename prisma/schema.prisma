@@ -15,15 +15,16 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   name      String?
-  email     String   @unique
+  email     String         @unique
   password  String
   phone     String?
   type      UserType
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tokens RefreshToken[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  tokens    RefreshToken[]
+  customer  Customer?
 }
 
 enum UserType {
@@ -39,4 +40,13 @@ model RefreshToken {
   userId    Int
   expiresAt DateTime
   createdAt DateTime @default(now())
+}
+
+model Customer {
+  id       Int      @id @default(autoincrement())
+  cpf      String?
+  dataNasc DateTime @default(now())
+  endereco String?
+  userId   Int      @unique
+  user     User     @relation(fields: [userId], references: [id])
 }

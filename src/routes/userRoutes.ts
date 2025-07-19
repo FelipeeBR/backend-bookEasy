@@ -27,10 +27,21 @@ router.delete("/users/:email", async (req: any, res: any) => {
     } catch (error) {
         return res.status(500).json({error: "Erro ao excluir usuário!"});
     }
+});
+
+router.get("/users/:email", async (req: any, res: any) => {
+    const { email } = req.params;
+    if(!email) return res.status(400).json({error: "E-mail inválido!"});
+    try {
+        const user = await userController.getUser(email);
+        return res.status(200).json({user: user});
+    } catch (error) {
+        return res.status(500).json({error: "Erro ao buscar usuário!"});
+    }
 })
 
 router.get("/users", async (req: any, res: any) => {
     res.send("Listagem de usuários");
-})
+});
 
 export default router;

@@ -47,11 +47,25 @@ async function deleteUser(email: string) {
     }
 }
 
+async function getUser(email: string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email.toLowerCase()
+            }
+        });
+        return user;
+    } catch (error) {
+        return false;
+    }
+}
+
 
 export default {
     createUser,
     userExists,
     isValidEmail,
     isValidPassword,
-    deleteUser
+    deleteUser,
+    getUser,
 }
