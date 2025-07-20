@@ -13,11 +13,42 @@ async function createService(name: string, duration: number, price: number, desc
         });
         return service;
     } catch (error) {
-        console.log(error);
+        throw error;
+    }
+}
+
+async function createServiceTime(startTime: string, serviceId: number) {
+    try {
+        const time = await prisma.time.create({
+            data: {
+                startTime: startTime,
+                serviceId: serviceId
+            },
+        });
+        return time;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getService(id: number) {
+    try {
+        const service = await prisma.service.findUnique({
+            where: {
+                id: id
+            },
+            include: {
+                time: true
+            }
+        });
+        return service;
+    } catch (error) {
         throw error;
     }
 }
 
 export default {
-    createService
+    createService,
+    createServiceTime,
+    getService
 }

@@ -54,10 +54,10 @@ model Customer {
 }
 
 model Employee {
-  id             Int     @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   specialization String?
-  userId         Int     @unique
-  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int       @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   service        Service[]
 }
 
@@ -68,18 +68,17 @@ model Service {
   price       Float
   description String
   employeeId  Int?         @unique
-  employee    Employee?     @relation(fields: [employeeId], references: [id])
+  employee    Employee?    @relation(fields: [employeeId], references: [id])
   time        Time[]
   scheduling  Scheduling[]
 }
 
 model Time {
-  id         Int        @id @default(autoincrement())
-  dayWeek    Int
+  id         Int         @id @default(autoincrement())
   startTime  DateTime
-  isBusy     Boolean    @default(false)
+  isBusy     Boolean     @default(false)
   serviceId  Int
-  service    Service    @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  service    Service     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   scheduling Scheduling?
 }
 
@@ -88,7 +87,7 @@ model Scheduling {
   date      DateTime
   status    Status
   serviceId Int
-  timeId    Int @unique
+  timeId    Int      @unique
   userId    Int
   service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   time      Time     @relation(fields: [timeId], references: [id], onDelete: Cascade)
