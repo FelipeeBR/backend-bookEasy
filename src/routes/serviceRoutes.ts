@@ -2,9 +2,9 @@ import express from "express";
 const router = express.Router();
 
 import serviceController from "../controllers/serviceController";
+import { auth } from "../middlewares/auth";
 
-
-router.post("/service", async (req: any, res: any) => {
+router.post("/service", auth, async (req: any, res: any) => {
     const { name, duration, price, description, employeeId } = req.body;
     if(!name || !duration || !price || !description || !employeeId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {
@@ -15,7 +15,7 @@ router.post("/service", async (req: any, res: any) => {
     }
 });
 
-router.post("/service/time", async (req: any, res: any) => {
+router.post("/service/time", auth, async (req: any, res: any) => {
     const { startTime, serviceId } = req.body;
     if(!startTime || !serviceId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {
@@ -26,7 +26,7 @@ router.post("/service/time", async (req: any, res: any) => {
     }
 });
 
-router.get("/service/:id", async (req: any, res: any) => {
+router.get("/service/:id", auth, async (req: any, res: any) => {
     const {id} = req.params;
     if(!id) return res.status(401).json({ error: "Id inválido!" });
     try {

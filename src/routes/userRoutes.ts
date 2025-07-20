@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import userController from "../controllers/userController";
-import auth from "../middlewares/auth";
+import { auth } from "../middlewares/auth";
 
 router.post("/register", async (req: any, res: any) => {
     const { name, email, password, phone, type } = req.body;
@@ -18,7 +18,7 @@ router.post("/register", async (req: any, res: any) => {
     }
 });
 
-router.delete("/users/:email", async (req: any, res: any) => {
+router.delete("/users/:email", auth, async (req: any, res: any) => {
     const { email } = req.params;
     if(!email) return res.status(400).json({error: "E-mail inválido!"});
     try {
@@ -29,7 +29,7 @@ router.delete("/users/:email", async (req: any, res: any) => {
     }
 });
 
-router.get("/users/:email", async (req: any, res: any) => {
+router.get("/users/:email", auth, async (req: any, res: any) => {
     const { email } = req.params;
     if(!email) return res.status(400).json({error: "E-mail inválido!"});
     try {
@@ -40,7 +40,7 @@ router.get("/users/:email", async (req: any, res: any) => {
     }
 })
 
-router.get("/users", async (req: any, res: any) => {
+router.get("/users", auth, async (req: any, res: any) => {
     res.send("Listagem de usuários");
 });
 

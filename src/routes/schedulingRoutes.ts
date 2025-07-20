@@ -2,8 +2,9 @@ import express from "express";
 const router = express.Router();
 
 import schedulingController from "../controllers/schedulingController";
+import { auth } from "../middlewares/auth";
 
-router.post("/scheduling", async (req: any, res: any) => {
+router.post("/scheduling", auth, async (req: any, res: any) => {
     const { serviceId, status, timeId, customerId } = req.body;
     if(!serviceId || !timeId || !customerId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {

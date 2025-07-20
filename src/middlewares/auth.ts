@@ -5,7 +5,8 @@ dotenv.config();
 
 function auth(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
-    if(!token || !token.startsWith("Bearer ")) {
+
+    if (!token || !token.startsWith("Bearer ")) {
         return res.status(401).json({ error: "Unauthorized" });
     }
 
@@ -13,12 +14,11 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
     try {
         const decoded = jwt.verify(bearedToken, process.env.JWT_TOKEN!) as any;
-        (req as any).user = {id: decoded.id, email: decoded.email};
-        next();
+        (req as any).user = { id: decoded.id, email: decoded.email };
+        return next();
     } catch (error) {
         return res.status(401).json({ error: "Invalid token" });
     }
-    return next();
 }
 
 function signToken(payload: any, secret: any, options: any) {
@@ -33,7 +33,6 @@ function signToken(payload: any, secret: any, options: any) {
     })
 }
 
-export default {
+export {
     auth,
-    signToken
 }
