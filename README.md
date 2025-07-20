@@ -9,7 +9,7 @@ Projeto Node.js, TDD e testes unitários é um Sistema de Agendamento de Serviç
 - Refresh tokens
 - Alguns testes para verificar credenciais
 
-# 🛠️ Stack Tecnológica
+## 🛠️ Stack Tecnológica
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
