@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 //Rotas
 import userRoutes from "./src/routes/userRoutes";
@@ -10,6 +11,8 @@ import serviceRoutes from "./src/routes/serviceRoutes";
 import schedulingRoutes from "./src/routes/schedulingRoutes";
 
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
