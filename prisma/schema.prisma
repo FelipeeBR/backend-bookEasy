@@ -15,18 +15,17 @@ datasource db {
 }
 
 model User {
-  id         Int            @id @default(autoincrement())
-  name       String?
-  email      String         @unique
-  password   String
-  phone      String?
-  type       UserType
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  tokens     RefreshToken[]
-  customer   Customer?
-  employee   Employee?
-  scheduling Scheduling[]
+  id        Int            @id @default(autoincrement())
+  name      String?
+  email     String         @unique
+  password  String
+  phone     String?
+  type      UserType
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  tokens    RefreshToken[]
+  customer  Customer?
+  employee  Employee?
 }
 
 enum UserType {
@@ -45,12 +44,13 @@ model RefreshToken {
 }
 
 model Customer {
-  id       Int      @id @default(autoincrement())
-  cpf      String?
-  dataNasc DateTime @default(now())
-  endereco String?
-  userId   Int      @unique
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         Int          @id @default(autoincrement())
+  cpf        String?
+  dataNasc   DateTime     @default(now())
+  endereco   String?
+  userId     Int          @unique
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scheduling Scheduling[]
 }
 
 model Employee {
@@ -83,15 +83,15 @@ model Time {
 }
 
 model Scheduling {
-  id        Int      @id @default(autoincrement())
-  date      DateTime
-  status    Status
-  serviceId Int
-  timeId    Int      @unique
-  userId    Int
-  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  time      Time     @relation(fields: [timeId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         Int      @id @default(autoincrement())
+  date       DateTime
+  status     Status
+  serviceId  Int
+  timeId     Int      @unique
+  customerId Int
+  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  time       Time     @relation(fields: [timeId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 }
 
 enum Status {
