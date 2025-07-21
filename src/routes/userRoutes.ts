@@ -41,7 +41,12 @@ router.get("/users/:email", auth, async (req: any, res: any) => {
 })
 
 router.get("/users", auth, async (req: any, res: any) => {
-    res.send("Listagem de usuários");
+    try {
+        const users = await userController.getUsers();
+        return res.status(200).json({users: users});
+    } catch (error) {
+        return res.status(500).json({error: "Erro ao buscar usuários!"});
+    }
 });
 
 export default router;

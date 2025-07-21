@@ -60,6 +60,15 @@ async function getUser(email: string) {
     }
 }
 
+async function getUsers() {
+    try {
+        const users = await prisma.user.findMany();
+        return users;
+    } catch (error) {
+        return false;
+    }
+}
+
 
 export default {
     createUser,
@@ -68,4 +77,5 @@ export default {
     isValidPassword,
     deleteUser,
     getUser,
+    getUsers
 }
