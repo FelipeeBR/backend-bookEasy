@@ -15,7 +15,7 @@ async function authenticate(email, password) {
     if (!(await compare(password, user.password))) {
         return false;
     }
-    const { accessToken, refreshToken } = generateTokens({ id: user.id, email: user.email });
+    const { accessToken, refreshToken } = generateTokens({ id: user.id, email: user.email, role: user.role });
     await prismaInstance.refreshToken.create({
         data: {
             token: refreshToken,
@@ -38,7 +38,7 @@ async function refresh(refreshToken) {
         if (!tokenDb || tokenDb.userId !== decoded.id || new Date(tokenDb.expiresAt) < new Date()) {
             return false;
         }
-        const newTokens = generateTokens({ id: decoded.id, email: decoded.email });
+        const newTokens = generateTokens({ id: decoded.id, email: decoded.email, role: decoded.role });
         return newTokens;
     }
     catch (error) {

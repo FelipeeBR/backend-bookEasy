@@ -5,7 +5,7 @@ const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 const isValidPassword = (password: string) => password.length >= 8;
 
 
-async function createUser(name: string, email: string, password: string, phone: string, type: string) {
+async function createUser(name: string, email: string, password: string, phone: string, role: string) {
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     try {
@@ -15,7 +15,7 @@ async function createUser(name: string, email: string, password: string, phone: 
                 email: email.toLowerCase(),
                 password: hashedPassword,
                 phone: phone,
-                type: type
+                role: role
             },
         });
         return user;

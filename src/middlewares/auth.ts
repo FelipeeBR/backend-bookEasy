@@ -14,7 +14,7 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
     try {
         const decoded = jwt.verify(bearedToken, process.env.JWT_TOKEN!) as any;
-        (req as any).user = { id: decoded.id, email: decoded.email };
+        (req as any).user = { id: decoded.id, email: decoded.email, role: decoded.role };
         return next();
     } catch (error) {
         return res.status(401).json({ error: "Invalid token" });
