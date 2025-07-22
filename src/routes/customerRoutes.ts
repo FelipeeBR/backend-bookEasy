@@ -14,4 +14,24 @@ router.post("/customer", auth, async (req: any, res: any) => {
     }
 });
 
+router.get("/customers", auth, async (req: any, res: any) => {
+    try {
+        const customers = await customerController.getCustomers();
+        return res.status(200).json({ customers: customers });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar clientes!" });
+    }
+});
+
+router.get("/customer/:id", auth, async (req: any, res: any) => {
+    const {id} = req.params;
+    if(!id) return res.status(401).json({ error: "Id inválido!" });
+    try {
+        const customer = await customerController.getCustomer(parseInt(id));
+        return res.status(200).json({ customer: customer });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar cliente!" });
+    }
+});
+
 export default router;
