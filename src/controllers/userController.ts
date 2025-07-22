@@ -69,6 +69,19 @@ async function getUsers() {
     }
 }
 
+async function getUserById(id: number) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        });
+        return user;
+    } catch (error) {
+        return false;
+    }
+}
+
 
 export default {
     createUser,
@@ -77,5 +90,6 @@ export default {
     isValidPassword,
     deleteUser,
     getUser,
-    getUsers
+    getUsers,
+    getUserById
 }

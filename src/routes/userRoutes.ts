@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import userController from "../controllers/userController";
-import { auth } from "../middlewares/auth";
+import { auth, AuthenticatedRequest } from "../middlewares/auth";
 import { authorizeRoles } from "../middlewares/authorizeRole";
 
 router.post("/register", async (req: any, res: any) => {
@@ -47,6 +47,17 @@ router.get("/users", auth, authorizeRoles(["ADMIN"]), async (req: any, res: any)
         return res.status(200).json({users: users});
     } catch (error) {
         return res.status(500).json({error: "Erro ao buscar usuários!"});
+    }
+});
+
+router.get("/user", auth, async (req: AuthenticatedRequest, res: any) => {
+    const userId = req.user?.id;
+    if(!userId) return res.status(401).json({ error: "Id inválido!" });
+    try {
+        const user = await userController.getUserById(userId);
+        return res.status(200).json({ user: user });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar usuário!" });
     }
 });
 
