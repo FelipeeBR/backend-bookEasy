@@ -18,3 +18,6 @@ Projeto Node.js, TDD e testes unitários é um Sistema de Agendamento de Serviç
 - **Testes:** Jest (para unitários e integração), Supertest (para API)
 - **Autenticação:** JWT
 - **Outros:** TypeScript, Docker
+
+
+## 🔃 Rotas
