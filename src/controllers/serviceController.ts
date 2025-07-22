@@ -47,8 +47,22 @@ async function getService(id: number) {
     }
 }
 
+async function getServices() {
+    try {
+        const services = await prisma.service.findMany({
+            include: {
+                time: true
+            }
+        });
+        return services;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     createService,
     createServiceTime,
-    getService
+    getService,
+    getServices
 }

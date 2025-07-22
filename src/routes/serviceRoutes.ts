@@ -37,4 +37,13 @@ router.get("/service/:id", auth, async (req: any, res: any) => {
     }
 });
 
+router.get("/services", auth, async (req: any, res: any) => {
+    try {
+        const services = await serviceController.getServices();
+        return res.status(200).json({ services: services });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar servicos!" });
+    }
+});
+
 export default router;

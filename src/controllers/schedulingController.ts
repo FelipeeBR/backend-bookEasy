@@ -1,4 +1,5 @@
 import prisma from '../../config/database';
+const jwt = require('jsonwebtoken');
 
 async function createScheduling(serviceId: number, status: string, timeId: number, customerId: number) {
     try {
@@ -22,6 +23,36 @@ async function createScheduling(serviceId: number, status: string, timeId: numbe
     }
 }
 
+async function deleteScheduling(id: number) {
+    try {
+        const scheduling = await prisma.scheduling.delete({
+            where: {
+                id: id
+            }
+        });
+        return scheduling;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+async function getScheduling(costumerId: number) {
+    try {
+        const scheduling = await prisma.scheduling.findMany({
+            where: {
+                customerId: costumerId
+            }
+        });
+        return scheduling;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
-    createScheduling
+    createScheduling,
+    deleteScheduling,
+    getScheduling   
 }

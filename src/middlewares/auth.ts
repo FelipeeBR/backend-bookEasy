@@ -3,7 +3,16 @@ import { Request, Response, NextFunction } from 'express';
 import dotenv from "dotenv";
 dotenv.config();
 
-function auth(req: Request, res: Response, next: NextFunction) {
+
+export interface AuthenticatedRequest extends Request {
+    user?: {
+        id: number;
+        email: string;
+        role: string;
+    };
+}
+
+function auth(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
 
     if (!token || !token.startsWith("Bearer ")) {
