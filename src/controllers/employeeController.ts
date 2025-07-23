@@ -1,11 +1,11 @@
 import prisma from '../../config/database';
 
-async function createEmployee(specialization: string, userId: string) {
+async function createEmployee(specialization: string, userId: number) {
     try {
         const employee = await prisma.employee.create({
             data: {
                 specialization: specialization,
-                userId: parseInt(userId)
+                userId: userId
             },
         });
         return employee;
@@ -77,6 +77,18 @@ async function getEmployeeByUserId(userId: number) {
         throw error;
     }
 }
+async function getEmployeeIdByUserId(userId: number) {
+    try {
+        const employee = await prisma.employee.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+        return employee.id;
+    } catch (error) {
+        throw error;
+    }
+}
 
 export default {
     createEmployee,
@@ -84,5 +96,6 @@ export default {
     getEmployees,
     updateEmployee,
     deleteEmployee,
-    getEmployeeByUserId
+    getEmployeeByUserId,
+    getEmployeeIdByUserId
 }

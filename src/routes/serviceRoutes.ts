@@ -2,12 +2,18 @@ import express from "express";
 const router = express.Router();
 
 import serviceController from "../controllers/serviceController";
-import { auth } from "../middlewares/auth";
+import employeeController from "../controllers/employeeController";
+import { auth, AuthenticatedRequest } from "../middlewares/auth";
 
-router.post("/service", auth, async (req: any, res: any) => {
-    const { name, duration, price, description, employeeId } = req.body;
-    if(!name || !duration || !price || !description || !employeeId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
+router.post("/service", auth, async (req: AuthenticatedRequest, res: any) => {
+    const userId = req.user?.id;
+    const { name, duration, price, description } = req.body;
+    if (!userId) {
+        return res.status(401).json({ error: "User Id inválido!" });
+    }
+    if(!name || !duration || !price || !description) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {
+        const employeeId = await employeeController.getEmployeeIdByUserId(userId);
         const service = await serviceController.createService(name, duration, price, description, employeeId);
         return res.status(201).json({ message: "Servico criado com sucesso!", "service": service });
     } catch (error) {

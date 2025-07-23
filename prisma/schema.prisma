@@ -67,7 +67,7 @@ model Service {
   duration    Int
   price       Float
   description String
-  employeeId  Int?         @unique
+  employeeId  Int?         
   employee    Employee?    @relation(fields: [employeeId], references: [id])
   time        Time[]
   scheduling  Scheduling[]
