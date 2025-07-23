@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 
 import employeeController from "../controllers/employeeController";
-import { auth } from "../middlewares/auth";
+import { auth, AuthenticatedRequest } from "../middlewares/auth";
 
 router.post("/employee", auth, async (req: any, res: any) => {
     const { specialization, userId } = req.body;
@@ -55,6 +55,17 @@ router.delete("/employee/:id", auth, async (req: any, res: any) => {
         return res.status(200).json({ message: "Funcionario excluido com sucesso!" });
     } catch (error) {
         return res.status(500).json({ error: "Erro ao excluir funcionário!" });
+    }
+});
+
+router.get("/employee", auth, async (req: AuthenticatedRequest, res: any) => {
+    const userId = req.user?.id;
+    if(!userId) return res.status(401).json({ error: "Id inválido!" });
+    try {
+        const employee = await employeeController.getEmployeeByUserId(userId);
+        return res.status(200).json({ employee: employee });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar funcionário!" });
     }
 });
 

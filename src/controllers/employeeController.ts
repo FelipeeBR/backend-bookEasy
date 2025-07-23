@@ -65,10 +65,24 @@ async function deleteEmployee(id: number) {
     }
 }
 
+async function getEmployeeByUserId(userId: number) {
+    try {
+        const employee = await prisma.employee.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+        return employee;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     createEmployee,
     getEmployee,
     getEmployees,
     updateEmployee,
-    deleteEmployee
+    deleteEmployee,
+    getEmployeeByUserId
 }
