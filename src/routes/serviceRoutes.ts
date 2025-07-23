@@ -52,4 +52,16 @@ router.get("/services", auth, async (req: any, res: any) => {
     }
 });
 
+router.get("/service", auth, async(req: AuthenticatedRequest, res: any) => {
+    const userId = req.user?.id;
+    if(!userId) return res.status(401).json({ error: "Id inválido!" });
+    try {
+        const employeeId = await employeeController.getEmployeeIdByUserId(userId);
+        const services = await serviceController.getServiceByEmployeeId(employeeId);
+        return res.status(200).json({ services: services });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar servicos!" });
+    }
+})
+
 export default router;

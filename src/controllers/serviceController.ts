@@ -61,9 +61,23 @@ async function getServices() {
     }
 }
 
+async function getServiceByEmployeeId(employeeId: number) {
+    try {
+        const service = await prisma.service.findMany({
+            where: {
+                employeeId: employeeId
+            }
+        });
+        return service;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export default {
     createService,
     createServiceTime,
     getService,
-    getServices
+    getServices,
+    getServiceByEmployeeId
 }
