@@ -1,5 +1,7 @@
 # Backend com Node.js: Sistema de Agendamento de Serviços
 
+Acesse o Front-End React: https://github.com/FelipeeBR/frontend-bookEasy
+
 Projeto Node.js, TDD e testes unitários é um Sistema de Agendamento de Serviços (como uma barbearia ou spa).
 
 ## 📌Funcionalidades principais:
