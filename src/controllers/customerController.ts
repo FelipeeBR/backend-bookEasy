@@ -1,14 +1,14 @@
 import prisma from '../../config/database';
 const jwt = require('jsonwebtoken');
 
-async function createCustomer(cpf: string, dataNasc: string, endereco: string, userId: string) {
+async function createCustomer(cpf: string, dataNasc: string, endereco: string, userId: number) {
     try {
         const customer = await prisma.customer.create({
             data: {
                 cpf: cpf,
-                dataNasc: dataNasc,
+                dataNasc: new Date(dataNasc).toISOString(),
                 endereco: endereco,
-                userId: parseInt(userId)
+                userId: userId
             },
         });
         return customer;
@@ -96,6 +96,20 @@ async function getCustomerIdByUserId(userId: number) {
     }
 }
 
+async function getCustomerByUserId(userId: number) {
+    try {
+        const customer = await prisma.customer.findUnique({
+            where: {
+                userId: userId
+            }
+        });
+        return customer;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 export default {
     createCustomer,
     getCustomer,
@@ -103,5 +117,6 @@ export default {
     updateCustomer,
     deleteCustomer,
     getSchedulingByUserId,
-    getCustomerIdByUserId
+    getCustomerIdByUserId,
+    getCustomerByUserId
 }

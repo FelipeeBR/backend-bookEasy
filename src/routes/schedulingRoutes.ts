@@ -7,6 +7,7 @@ import { auth, AuthenticatedRequest} from "../middlewares/auth";
 
 router.post("/scheduling", auth, async (req: any, res: any) => {
     const { serviceId, status, timeId, customerId } = req.body;
+    console.log(req.body);
     if(!serviceId || !timeId || !customerId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {
         const scheduling = await schedulingController.createScheduling(serviceId, status, timeId, customerId);

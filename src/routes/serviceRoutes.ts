@@ -26,9 +26,9 @@ router.post("/service/time", auth, async (req: any, res: any) => {
     if(!startTime || !serviceId) return res.status(400).json({ error: "Todos os campos devem ser preenchidos!" });
     try {
         const service = await serviceController.createServiceTime(startTime, serviceId);
-        return res.status(201).json({ message: "Servico criado com sucesso!", "service": service });
+        return res.status(201).json({ message: "Horario criado com sucesso!", "service": service });
     } catch (error) {
-        return res.status(500).json({ error: "Erro ao criar servico!" });
+        return res.status(500).json({ error: "Erro ao criar Horario!" });
     }
 });
 
@@ -62,6 +62,17 @@ router.get("/service", auth, async(req: AuthenticatedRequest, res: any) => {
     } catch (error) {
         return res.status(500).json({ error: "Erro ao buscar servicos!" });
     }
-})
+});
+
+router.delete("/time/:id", auth, async (req: any, res: any) => {
+    const {id} = req.params;
+    if(!id) return res.status(400).json({ error: "Id inválido!" });
+    try {
+        await serviceController.deleteTime(id);
+        return res.status(200).json({ message: "Horario excluido com sucesso!" });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao excluir Horario!" });
+    }
+});
 
 export default router;

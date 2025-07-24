@@ -1,15 +1,16 @@
+import { parse } from 'dotenv';
 import prisma from '../../config/database';
 const jwt = require('jsonwebtoken');
 
-async function createScheduling(serviceId: number, status: string, timeId: number, customerId: number) {
+async function createScheduling(serviceId: string, status: string, timeId: string, customerId: string) {
     try {
         const scheduling = await prisma.scheduling.create({
             data: {
                 date: new Date().toISOString(),
                 status: status,
-                serviceId: serviceId,
-                timeId: timeId,
-                customerId: customerId,
+                serviceId: parseInt(serviceId),
+                timeId: parseInt(timeId),
+                customerId: parseInt(customerId),
             }
         });
         await prisma.time.update({

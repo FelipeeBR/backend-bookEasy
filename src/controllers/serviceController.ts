@@ -18,16 +18,17 @@ async function createService(name: string, duration: number, price: string, desc
     }
 }
 
-async function createServiceTime(startTime: string, serviceId: number) {
+async function createServiceTime(startTime: string, serviceId: string) {
     try {
         const time = await prisma.time.create({
             data: {
-                startTime: startTime,
-                serviceId: serviceId
+                startTime: new Date(startTime).toISOString(),
+                serviceId: parseInt(serviceId)
             },
         });
         return time;
     } catch (error) {
+        console.log("Erro: ", error);
         throw error;
     }
 }
@@ -38,8 +39,12 @@ async function getService(id: number) {
             where: {
                 id: id
             },
-            include: {
-                time: true
+            select: {
+                time: {
+                    where: {
+                        isBusy: false
+                    }
+                }
             }
         });
         return service;
@@ -66,9 +71,25 @@ async function getServiceByEmployeeId(employeeId: number) {
         const service = await prisma.service.findMany({
             where: {
                 employeeId: employeeId
+            },
+            include: {
+                time: true
             }
         });
         return service;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function deleteTime(id: string) {
+    try {
+        const time = await prisma.time.delete({
+            where: {
+                id: parseInt(id)
+            }
+        });
+        return time;
     } catch (error) {
         throw error;
     }
@@ -79,5 +100,6 @@ export default {
     createServiceTime,
     getService,
     getServices,
-    getServiceByEmployeeId
+    getServiceByEmployeeId,
+    deleteTime
 }
